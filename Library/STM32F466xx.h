@@ -86,7 +86,7 @@
 #define SAI1_BASE_ADDRESS 0x0x40015800UL // SAI1 base address
 #define SAI2_BASE_ADDRESS 0x40015C00UL   // SAI2 base address
 
-/****************************** Peripheral Register Definition Structures ******************/
+/****************************** GPIO Register Definition Structures ******************/
 
 typedef struct
 {
@@ -100,5 +100,60 @@ typedef struct
     volatile uint32_t LCKR;    // GPIO port configuration lock register
     volatile uint32_t AFR[2];  // GPIO alternate function registers
 } GPIO_RegDef_t;
+
+/****************************** RCC Register Definition Structures ******************/
+
+typedef struct
+{
+    volatile uint32_t CR;           // RCC clock control register
+    volatile uint32_t PLLCFGR;      // RCC PLL configuration register
+    volatile uint32_t CFGR;         // RCC clock configuration register
+    volatile uint32_t CIR;          // RCC clock interrupt register
+    volatile uint32_t AHB1RSTR;     // RCC AHB1 peripheral reset register
+    volatile uint32_t AHB2RSTR;     // RCC AHB2 peripheral reset register
+    volatile uint32_t AHB3RSTR;     // RCC AHB3 peripheral reset register
+    volatile uint32_t RESERVED0;    // Reserved
+    volatile uint32_t APB1RSTR;     // RCC APB1 peripheral reset register
+    volatile uint32_t APB2RSTR;     // RCC APB2 peripheral reset register
+    volatile uint32_t RESERVED1[2]; // Reserved
+    volatile uint32_t AHB1ENR;      // RCC AHB1 peripheral clock enable register
+    volatile uint32_t AHB2ENR;      // RCC AHB2 peripheral clock enable register
+    volatile uint32_t AHB3ENR;      // RCC AHB3 peripheral clock enable register
+    volatile uint32_t RESERVED2;    // Reserved
+    volatile uint32_t APB1ENR;      // RCC APB1 peripheral clock enable register
+    volatile uint32_t APB2ENR;      // RCC APB2 peripheral clock enable register
+    volatile uint32_t RESERVED3[2]; // Reserved
+    volatile uint32_t AHB1LPENR;    // RCC AHB1 peripheral clock enable in low power mode register
+    volatile uint32_t AHB2LPENR;    // RCC AHB2 peripheral clock enable in low power mode register
+    volatile uint32_t AHB3LPENR;    // RCC AHB3 peripheral clock enable in low power mode register
+    volatile uint32_t RESERVED4;    // Reserved
+    volatile uint32_t APB1LPENR;    // RCC APB1 peripheral clock enable in low power mode register
+    volatile uint32_t APB2LPENR;    // RCC APB2 peripheral clock enable in low power mode register
+    volatile uint32_t RESERVED5[2]; // Reserved
+    volatile uint32_t BDCR;         // RCC Backup domain control register
+    volatile uint32_t CSR;          // RCC clock control & status register
+    volatile uint32_t RESERVED6[2]; // Reserved
+    volatile uint32_t SSCGR;        // RCC spread spectrum clock generation register
+    volatile uint32_t PLLI2SCFGR;   // RCC PLLI2S configuration register
+    volatile uint32_t PLLSAICFGR;   // RCC PLLSAI configuration register
+    volatile uint32_t DCKCFGR;      // RCC Dedicated Clock Configuration Register
+    volatile uint32_t CKGATENR;     // RCC clocks gated enable register
+    volatile uint32_t DCKCFGR2;     // RCC dedicated clocks configuration register 2
+} RCC_RegDef_t;
+
+/****************************** GPIO Definitions **************************************/
+
+#define GPIOA ((GPIO_RegDef_t *)GPIOA_BASE_ADDRESS)
+#define GPIOB ((GPIO_RegDef_t *)GPIOB_BASE_ADDRESS)
+#define GPIOC ((GPIO_RegDef_t *)GPIOC_BASE_ADDRESS)
+#define GPIOD ((GPIO_RegDef_t *)GPIOD_BASE_ADDRESS)
+#define GPIOE ((GPIO_RegDef_t *)GPIOE_BASE_ADDRESS)
+#define GPIOF ((GPIO_RegDef_t *)GPIOF_BASE_ADDRESS)
+#define GPIOG ((GPIO_RegDef_t *)GPIOG_BASE_ADDRESS)
+#define GPIOH ((GPIO_RegDef_t *)GPIOH_BASE_ADDRESS)
+
+/****************************** RCC Definitions **************************************/
+
+#define RCC ((RCC_RegDef_t *)RCC_BASE_ADDRESS)
 
 #endif
