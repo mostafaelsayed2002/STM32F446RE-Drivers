@@ -21,7 +21,7 @@ static GPIO_RegDef_t *GPIOx[GPIO_PERIPHERAL_NUM] = {GPIOA, GPIOB, GPIOC, GPIOD, 
  * @retval Error status
  */
 
-uint8_t GPIO_u8InitPin(const PinConfig_t *pinConfig)
+uint8_t GPIO_u8InitPin(const GPIO_PinConfig_t *pinConfig)
 {
     uint8_t Local_u8ErrorState = OK;
     if (pinConfig != NULL)

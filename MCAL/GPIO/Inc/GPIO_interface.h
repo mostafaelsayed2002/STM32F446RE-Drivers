@@ -98,9 +98,9 @@ typedef struct
     OutputSpeed_t outputSpeed;
     PullUpDown_t pullType;
     AlternateFunction_t alternateFunction;
-} PinConfig_t;
+} GPIO_PinConfig_t;
 
-uint8_t GPIO_u8InitPin(const PinConfig_t *pinConfig);
+uint8_t GPIO_u8InitPin(const GPIO_PinConfig_t *pinConfig);
 
 uint8_t GPIO_u8SetPinValue(Port_t port, Pin_t pin, PinState_t state);
 
