@@ -26,15 +26,67 @@ static uint8_t seven_segment_numbers[16] = {0b00111111,  // 0
                                             0b01111001,  // E
                                             0b01110001}; // F
 
-static GPIO_PinConfig_t data[8] = {
-    {.port = A_PORT, .pin = A_PIN, .mode = OUTPUT_10MHZ, .config = OUTPUT_PUSH_PULL},
-    {.port = B_PORT, .pin = B_PIN, .mode = OUTPUT_10MHZ, .config = OUTPUT_PUSH_PULL},
-    {.port = C_PORT, .pin = C_PIN, .mode = OUTPUT_10MHZ, .config = OUTPUT_PUSH_PULL},
-    {.port = D_PORT, .pin = D_PIN, .mode = OUTPUT_10MHZ, .config = OUTPUT_PUSH_PULL},
-    {.port = E_PORT, .pin = E_PIN, .mode = OUTPUT_10MHZ, .config = OUTPUT_PUSH_PULL},
-    {.port = F_PORT, .pin = F_PIN, .mode = OUTPUT_10MHZ, .config = OUTPUT_PUSH_PULL},
-    {.port = G_PORT, .pin = G_PIN, .mode = OUTPUT_10MHZ, .config = OUTPUT_PUSH_PULL},
-    {.port = DOT_PORT, .pin = DOT_PIN, .mode = OUTPUT_10MHZ, .config = OUTPUT_PUSH_PULL}};
+static GPIO_PinConfig_t data[8] =
+    {{.port = A_PORT,
+      .pin = A_PIN,
+      .mode = GENERAL_PURPOSE_OUTPUT,
+      .outputType = PUSH_PULL,
+      .outputSpeed = LOW_SPEED,
+      .pullType = NO_PULL,
+      .alternateFunction = AF0},
+     {.port = B_PORT,
+      .pin = B_PIN,
+      .mode = GENERAL_PURPOSE_OUTPUT,
+      .outputType = PUSH_PULL,
+      .outputSpeed = LOW_SPEED,
+      .pullType = NO_PULL,
+      .alternateFunction = AF0
+
+     },
+     {.port = C_PORT,
+      .pin = C_PIN,
+      .mode = GENERAL_PURPOSE_OUTPUT,
+      .outputType = PUSH_PULL,
+      .outputSpeed = LOW_SPEED,
+      .pullType = NO_PULL,
+      .alternateFunction = AF0},
+     {.port = D_PORT,
+      .pin = D_PIN,
+      .mode = GENERAL_PURPOSE_OUTPUT,
+      .outputType = PUSH_PULL,
+      .outputSpeed = LOW_SPEED,
+      .pullType = NO_PULL,
+      .alternateFunction = AF0},
+     {.port = E_PORT,
+      .pin = E_PIN,
+      .mode = GENERAL_PURPOSE_OUTPUT,
+      .outputType = PUSH_PULL,
+      .outputSpeed = LOW_SPEED,
+      .pullType = NO_PULL,
+      .alternateFunction = AF0},
+     {.port = F_PORT,
+      .pin = F_PIN,
+      .mode = GENERAL_PURPOSE_OUTPUT,
+      .outputType = PUSH_PULL,
+      .outputSpeed = LOW_SPEED,
+      .pullType = NO_PULL,
+      .alternateFunction = AF0},
+     {.port = G_PORT,
+      .pin = G_PIN,
+      .mode = GENERAL_PURPOSE_OUTPUT,
+      .outputType = PUSH_PULL,
+      .outputSpeed = LOW_SPEED,
+      .pullType = NO_PULL,
+      .alternateFunction = AF0},
+     {.port = DOT_PORT,
+      .pin = DOT_PIN,
+      .mode = GENERAL_PURPOSE_OUTPUT,
+      .outputType = PUSH_PULL,
+      .outputSpeed = LOW_SPEED,
+      .pullType = NO_PULL,
+      .alternateFunction = AF0}
+
+};
 
 void SEVEN_SEGMENT_voidInit(void)
 {

@@ -6,22 +6,67 @@
  */
 
 #include <stdint.h>
-#include "STM32F10xxx.h"
+#include "STM32F446xx.h"
 
 #include "LCD_interface.h"
-#include "LCD_private.h"
 #include "LCD_config.h"
 
 static GPIO_PinConfig_t control[2] = {
-    {.port = RS_PORT, .pin = RS_PIN, .mode = OUTPUT_10MHZ, .config = OUTPUT_PUSH_PULL},
-    {.port = EN_PORT, .pin = EN_PIN, .mode = OUTPUT_10MHZ, .config = OUTPUT_PUSH_PULL}};
-
-static GPIO_PinConfig_t data[4] = {
-
-    {.port = D4_PORT, .pin = D4_PIN, .mode = OUTPUT_10MHZ, .config = OUTPUT_PUSH_PULL},
-    {.port = D5_PORT, .pin = D5_PIN, .mode = OUTPUT_10MHZ, .config = OUTPUT_PUSH_PULL},
-    {.port = D6_PORT, .pin = D6_PIN, .mode = OUTPUT_10MHZ, .config = OUTPUT_PUSH_PULL},
-    {.port = D7_PORT, .pin = D7_PIN, .mode = OUTPUT_10MHZ, .config = OUTPUT_PUSH_PULL}};
+    {
+        .port = RS_PORT,
+        .pin = RS_PIN,
+        .mode = GENERAL_PURPOSE_OUTPUT,
+        .outputType = PUSH_PULL,
+        .outputSpeed = LOW_SPEED,
+        .pullType = NO_PULL,
+        .alternateFunction = AF0,
+    },
+    {
+        .port = EN_PORT,
+        .pin = EN_PIN,
+        .mode = GENERAL_PURPOSE_OUTPUT,
+        .outputType = PUSH_PULL,
+        .outputSpeed = LOW_SPEED,
+        .pullType = NO_PULL,
+        .alternateFunction = AF0,
+    },
+};
+static GPIO_PinConfig_t data[4] = {{
+                                       .port = D4_PORT,
+                                       .pin = D4_PIN,
+                                       .mode = GENERAL_PURPOSE_OUTPUT,
+                                       .outputType = PUSH_PULL,
+                                       .outputSpeed = LOW_SPEED,
+                                       .pullType = NO_PULL,
+                                       .alternateFunction = AF0,
+                                   },
+                                   {
+                                       .port = D5_PORT,
+                                       .pin = D5_PIN,
+                                       .mode = GENERAL_PURPOSE_OUTPUT,
+                                       .outputType = PUSH_PULL,
+                                       .outputSpeed = LOW_SPEED,
+                                       .pullType = NO_PULL,
+                                       .alternateFunction = AF0,
+                                   },
+                                   {
+                                       .port = D6_PORT,
+                                       .pin = D6_PIN,
+                                       .mode = GENERAL_PURPOSE_OUTPUT,
+                                       .outputType = PUSH_PULL,
+                                       .outputSpeed = LOW_SPEED,
+                                       .pullType = NO_PULL,
+                                       .alternateFunction = AF0,
+                                   },
+                                   {
+                                       .port = D7_PORT,
+                                       .pin = D7_PIN,
+                                       .mode = GENERAL_PURPOSE_OUTPUT,
+                                       .outputType = PUSH_PULL,
+                                       .outputSpeed = LOW_SPEED,
+                                       .pullType = NO_PULL,
+                                       .alternateFunction = AF0,
+                                   }};
 
 void LCD_voidInit(void)
 {
