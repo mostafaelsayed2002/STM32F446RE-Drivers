@@ -139,15 +139,16 @@ uint8_t GPIO_u8ReadPinValue(Port_t port, Pin_t pin, PinState_t *state)
     {
         if (GPIOx[port]->IDR & (1 << pin))
         {
-            state = HIGH;
+            *state = HIGH;
         }
         else
         {
-            state = LOW;
+            *state = LOW;
         }
     }
     else
     {
         Local_u8ErrorState = NOK;
     }
+    return Local_u8ErrorState;
 }

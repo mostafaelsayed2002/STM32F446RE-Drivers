@@ -1,4 +1,4 @@
-#include <cstdint>
+#include <stdint.h>
 #ifndef STM32F466XX_H
 #define STM32F466XX_H
 
@@ -83,7 +83,7 @@
 #define TIM9_BASE_ADDRESS 0x40014000UL   // TIM9 base address
 #define TIM10_BASE_ADDRESS 0x40014400UL  // TIM10 base address
 #define TIM11_BASE_ADDRESS 0x40014800UL  // TIM11 base address
-#define SAI1_BASE_ADDRESS 0x0x40015800UL // SAI1 base address
+#define SAI1_BASE_ADDRESS 0x40015800UL   // SAI1 base address
 #define SAI2_BASE_ADDRESS 0x40015C00UL   // SAI2 base address
 
 /****************************** GPIO Register Definition Structures ******************/
