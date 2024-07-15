@@ -86,6 +86,14 @@
 #define SAI1_BASE_ADDRESS 0x40015800UL   // SAI1 base address
 #define SAI2_BASE_ADDRESS 0x40015C00UL   // SAI2 base address
 
+/****************************** Private peripheral bus Base Addresses *********************/
+
+#define STK_BASE_ADDRESS 0xE000E010UL  // SysTick base address
+#define NVIC_BASE_ADDRESS 0xE000E100UL // NVIC base address
+#define SCB_BASE_ADDRESS 0xE000ED00UL  // System control block base address
+#define MPU_BASE_ADDRESS 0xE000ED90UL  // Memory protection unit base address
+#define FPU_BASE_ADDRESS 0xE000EF30UL  // Floating point unit base address
+
 /****************************** GPIO Register Definition Structures ******************/
 
 typedef struct
@@ -141,6 +149,28 @@ typedef struct
     volatile uint32_t DCKCFGR2;     // RCC dedicated clocks configuration register 2
 } RCC_RegDef_t;
 
+/****************************** SCB Register Definition Structures ******************/
+
+typedef struct
+{
+    volatile uint32_t CPUID;   // CPUID base register
+    volatile uint32_t ICSR;    // Interrupt control and state register
+    volatile uint32_t VTOR;    // Vector table offset register
+    volatile uint32_t AIRCR;   // Application interrupt and reset control register
+    volatile uint32_t SCR;     // System control register
+    volatile uint32_t CCR;     // Configuration and control register
+    volatile uint8_t SHPR[12]; // System handler priority registers
+    volatile uint32_t SHCSR;   // System handler control and state register
+    volatile uint32_t CFSR;    // Configurable fault status register
+    volatile uint32_t MMSR;    // MemManage fault address register
+    volatile uint32_t BFSR;    // BusFault address register
+    volatile uint32_t UFSR;    // UsageFault address register
+    volatile uint32_t HFSR;    // HardFault address register
+    volatile uint32_t MMFAR;   // MemManage fault status register
+    volatile uint32_t BFAR;    // BusFault address register
+    volatile uint32_t AFSR;    // Auxiliary fault status register
+} SCB_RegDef_t;
+
 /****************************** GPIO Definitions **************************************/
 
 #define GPIOA ((GPIO_RegDef_t *)GPIOA_BASE_ADDRESS)
@@ -155,5 +185,9 @@ typedef struct
 /****************************** RCC Definitions **************************************/
 
 #define RCC ((RCC_RegDef_t *)RCC_BASE_ADDRESS)
+
+/****************************** SCB Definitions **************************************/
+
+#define SCB ((SCB_RegDef_t *)SCB_BASE_ADDRESS)
 
 #endif
