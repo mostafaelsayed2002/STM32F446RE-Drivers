@@ -171,6 +171,24 @@ typedef struct
     volatile uint32_t AFSR;    // Auxiliary fault status register
 } SCB_RegDef_t;
 
+/****************************** NVIC Register Definition Structures ******************/
+
+typedef struct
+{
+    volatile uint32_t ISER[8]; // Interrupt set-enable registers
+    volatile uint32_t RESERVED0[24];
+    volatile uint32_t ICER[8]; // Interrupt clear-enable registers
+    volatile uint32_t RESERVED1[24];
+    volatile uint32_t ISPR[8]; // Interrupt set-pending registers
+    volatile uint32_t RESERVED2[24];
+    volatile uint32_t ICPR[8]; // Interrupt clear-pending registers
+    volatile uint32_t RESERVED3[24];
+    volatile uint32_t IABR[8]; // Interrupt active bit registers
+    volatile uint32_t RESERVED4[56];
+    volatile uint8_t IP[240]; // Interrupt priority registers
+
+} NVIC_RegDef_t;
+
 /****************************** GPIO Definitions **************************************/
 
 #define GPIOA ((GPIO_RegDef_t *)GPIOA_BASE_ADDRESS)
@@ -189,5 +207,9 @@ typedef struct
 /****************************** SCB Definitions **************************************/
 
 #define SCB ((SCB_RegDef_t *)SCB_BASE_ADDRESS)
+
+/****************************** NVIC Definitions **************************************/
+
+#define NVIC ((NVIC_RegDef_t *)NVIC_BASE_ADDRESS)
 
 #endif
