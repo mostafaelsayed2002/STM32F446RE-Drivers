@@ -189,6 +189,29 @@ typedef struct
 
 } NVIC_RegDef_t;
 
+/****************************** EXTI Register Definition Structures ******************/
+
+typedef struct
+{
+    volatile uint32_t IMR;   // Interrupt mask register
+    volatile uint32_t EMR;   // Event mask register
+    volatile uint32_t RTSR;  // Rising trigger selection register
+    volatile uint32_t FTSR;  // Falling trigger selection register
+    volatile uint32_t SWIER; // Software interrupt event register
+    volatile uint32_t PR;    // Pending register
+} EXTI_RegDef_t;
+
+/****************************** SYSCFG Register Definition Structures ******************/
+
+typedef struct
+{
+    volatile uint32_t MEMRMP;    // SYSCFG memory remap register
+    volatile uint32_t PMC;       // SYSCFG peripheral mode configuration register
+    volatile uint32_t EXTICR[4]; // SYSCFG external interrupt configuration registers
+    volatile uint32_t RESERVED0[2];
+    volatile uint32_t CMPCR; // Compensation cell control register
+} SYSCFG_RegDef_t;
+
 /****************************** GPIO Definitions **************************************/
 
 #define GPIOA ((GPIO_RegDef_t *)GPIOA_BASE_ADDRESS)
@@ -211,5 +234,13 @@ typedef struct
 /****************************** NVIC Definitions **************************************/
 
 #define NVIC ((NVIC_RegDef_t *)NVIC_BASE_ADDRESS)
+
+/****************************** EXTI Definitions **************************************/
+
+#define EXTI ((EXTI_RegDef_t *)EXTI_BASE_ADDRESS)
+
+/****************************** EXTI Definitions **************************************/
+
+#define SYSCFG ((SYSCFG_RegDef_t *)SYSCFG_BASE_ADDRESS)
 
 #endif
