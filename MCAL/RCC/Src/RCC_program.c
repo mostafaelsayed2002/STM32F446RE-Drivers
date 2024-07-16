@@ -9,9 +9,14 @@
 #include "STM32F466xx.h"
 
 #include "RCC_interface.h"
-#include "RCC_private.h"
 
 void RCC_voidAHB1EnablePeripheralClock(uint8_t peripheral)
 {
     RCC->AHB1ENR |= (1 << peripheral);
+}
+
+void RCC_voidAPB2EnablePeripheralClock(uint8_t peripheral)
+{
+
+    RCC->APB2ENR |= (1 << peripheral);
 }
