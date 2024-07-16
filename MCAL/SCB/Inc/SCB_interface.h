@@ -21,10 +21,29 @@ typedef enum
     SYSTICK
 } Exceptions_t;
 
-void SCB_voidSetPriorityGrouping(PriorityGrouping_t priorityGrouping);
+/**
+ * @fn     SCB_u8SetPriorityGrouping
+ * @brief  Sets the priority grouping for the NVIC
+ * @param[in]   priorityGrouping: The priority grouping value
+ * @retval Error status
+ */
+uint8_t SCB_u8SetPriorityGrouping(PriorityGrouping_t priorityGrouping);
 
-void SCB_voidSetPriority(Exceptions_t exception, uint8_t priority);
+/**
+ * @fn     SCB_u8SetPriority
+ * @brief  Sets the priority of an exception
+ * @param[in]   exception: The exception type
+ * @param[in]   priority: The priority value
+ * @retval Error status
+ */
+uint8_t SCB_u8SetPriority(Exceptions_t exception, uint8_t priority);
 
-void SCB_voidEnableFault(Exceptions_t exception);
+/**
+ * @fn     SCB_u8EnableFault
+ * @brief  Enables a fault exception
+ * @param[in]   exception: The exception type
+ * @retval Error status
+ */
+uint8_t SCB_u8EnableFault(Exceptions_t exception);
 
 #endif
