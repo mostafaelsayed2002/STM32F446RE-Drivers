@@ -13,7 +13,7 @@ typedef enum
 {
     MASKED,
     UNMASKED
-} EnabeState_t;
+} MaskState_t;
 
 typedef enum
 {
@@ -32,28 +32,56 @@ typedef enum
     EXTI12,
     EXTI13,
     EXTI14,
-    EXTI15,
-    EXTI16,
-    EXTI17,
-    EXTI18,
-    EXTI19,
-    EXTI20,
-    EXTI21,
-    EXTI22,
+    EXTI15
 } EXTI_Line_t;
 
 typedef struct
 {
     TriggerEvent_t TriggerEvent;
-    EnabeState_t EnableState;
+    MaskState_t EnableState;
     EXTI_Line_t EXTI_Line;
     void (*Callback)(void);
 } EXTI_Config_t;
 
-void EXTI_voidInit(EXTI_Config_t *EXTI_Config);
-void EXTI_voidEnableEXTI(EXTI_Line_t EXTI_Line);
-void EXTI_voidDisabeEXTI(EXTI_Line_t EXTI_Line);
-void EXTI_voidClearPendingFlag(EXTI_Line_t EXTI_Line);
-uint8_t EXTI_u8GetPendingFlag(EXTI_Line_t EXTI_Line);
+/**
+ * @fn     EXTI_u8Init
+ * @brief  Initialize the EXTI peripheral with the given configuration
+ * @param[in]  copy_Config: A pointer to the configuration structure
+ * @retval Error status
+ */
+uint8_t EXTI_u8Init(EXTI_Config_t *copy_Config);
+
+/**
+ * @fn     EXTI_u8EnableEXTI
+ * @brief  Enable the EXTI line
+ * @param[in]  copy_line: The EXTI line to enable
+ * @retval Error status
+ */
+uint8_t EXTI_u8EnableEXTI(EXTI_Line_t copy_line);
+
+/**
+ * @fn     EXTI_u8DisabeEXTI
+ * @brief  Disable the EXTI line
+ * @param[in]  copy_line: The EXTI line to disable
+ * @retval Error status
+ */
+uint8_t EXTI_u8DisabeEXTI(EXTI_Line_t copy_line);
+
+/**
+ * @fn     EXTI_u8ClearPendingFlag
+ * @brief  Clear the pending flag of the EXTI line
+ * @param[in]  copy_line: The EXTI line to clear the pending flag for
+ * @retval Error status
+ */
+uint8_t EXTI_u8ClearPendingFlag(EXTI_Line_t copy_line);
+
+/**
+ * @fn     EXTI_u8GetPendingFlag
+ * @brief  Get the pending flag status of the EXTI line
+ * @param[in]  copy_line: The EXTI line to get the pending flag status for
+ * @param[out] value: Pointer to a variable to store the pending flag status
+ * @retval Error status
+ */
+uint8_t EXTI_u8GetPendingFlag(EXTI_Line_t copy_line, uint8_t *value);
 
 #endif
