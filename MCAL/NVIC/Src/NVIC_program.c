@@ -6,40 +6,96 @@
  */
 
 #include <stdint.h>
+#include "ErrType.h"
 #include "STM32F466xx.h"
 #include "NVIC_interface.h"
 
-void NVIC_voidEnable(InterruptNumber_t interruptNumber)
+uint8_t NVIC_u8Enable(IRQ_t IRQ)
 {
-    uint8_t regIndex = interruptNumber / 32;
-    uint8_t bitIndex = interruptNumber % 32;
-    NVIC->ISER[regIndex] = (1 << bitIndex);
+    uint8_t Local_u8ErrorState = OK;
+    if (IRQ <= FMPI2C1_ERROR_IRQ)
+    {
+        uint8_t regIndex = IRQ / 32;
+        uint8_t bitIndex = IRQ % 32;
+        NVIC->ISER[regIndex] = (1 << bitIndex);
+    }
+    else
+    {
+        Local_u8ErrorState = NOK;
+    }
+    return Local_u8ErrorState;
 }
-void NVIC_voidDisable(InterruptNumber_t interruptNumber)
+uint8_t NVIC_u8Disable(IRQ_t IRQ)
 {
-    uint8_t regIndex = interruptNumber / 32;
-    uint8_t bitIndex = interruptNumber % 32;
-    NVIC->ICER[regIndex] = (1 << bitIndex);
+    uint8_t Local_u8ErrorState = OK;
+    if (IRQ <= FMPI2C1_ERROR_IRQ)
+    {
+        uint8_t regIndex = IRQ / 32;
+        uint8_t bitIndex = IRQ % 32;
+        NVIC->ICER[regIndex] = (1 << bitIndex);
+    }
+    else
+    {
+        Local_u8ErrorState = NOK;
+    }
+    return Local_u8ErrorState;
 }
-void NVIC_voidSetPendingFlag(InterruptNumber_t interruptNumber)
+uint8_t NVIC_u8SetPendingFlag(IRQ_t IRQ)
 {
-    uint8_t regIndex = interruptNumber / 32;
-    uint8_t bitIndex = interruptNumber % 32;
-    NVIC->ISPR[regIndex] = (1 << bitIndex);
+    uint8_t Local_u8ErrorState = OK;
+    if (IRQ <= FMPI2C1_ERROR_IRQ)
+    {
+        uint8_t regIndex = IRQ / 32;
+        uint8_t bitIndex = IRQ % 32;
+        NVIC->ISPR[regIndex] = (1 << bitIndex);
+    }
+    else
+    {
+        Local_u8ErrorState = NOK;
+    }
+    return Local_u8ErrorState;
 }
-void NVIC_voidClearPendingFlag(InterruptNumber_t interruptNumber)
+uint8_t NVIC_u8ClearPendingFlag(IRQ_t IRQ)
 {
-    uint8_t regIndex = interruptNumber / 32;
-    uint8_t bitIndex = interruptNumber % 32;
-    NVIC->ICPR[regIndex] = (1 << bitIndex);
+    uint8_t Local_u8ErrorState = OK;
+    if (IRQ <= FMPI2C1_ERROR_IRQ)
+    {
+        uint8_t regIndex = IRQ / 32;
+        uint8_t bitIndex = IRQ % 32;
+        NVIC->ICPR[regIndex] = (1 << bitIndex);
+    }
+    else
+    {
+        return NOK;
+    }
+    return Local_u8ErrorState;
 }
-uint8_t NVIC_u8GetActiveFlag(InterruptNumber_t interruptNumber)
+uint8_t NVIC_u8GetActiveFlag(IRQ_t IRQ, uint8_t *value)
 {
-    uint8_t regIndex = interruptNumber / 32;
-    uint8_t bitIndex = interruptNumber % 32;
-    return NVIC->IABR[regIndex] & (1 << bitIndex);
+    uint8_t Local_u8ErrorState = OK;
+    if (IRQ <= FMPI2C1_ERROR_IRQ)
+    {
+        uint8_t regIndex = IRQ / 32;
+        uint8_t bitIndex = IRQ % 32;
+        *value = (NVIC->IABR[regIndex] >> bitIndex) & 1;
+    }
+    else
+    {
+        Local_u8ErrorState = NOK;
+    }
+    return Local_u8ErrorState;
 }
-void NVIC_voidSetPriority(InterruptNumber_t interruptNumber, uint8_t priority)
+uint8_t NVIC_u8SetPriority(IRQ_t IRQ, uint8_t priority)
 {
-    NVIC->IP[interruptNumber] = priority << 4;
+
+    uint8_t Local_u8ErrorState = OK;
+    if (IRQ <= FMPI2C1_ERROR_IRQ)
+    {
+        NVIC->IP[IRQ] = priority << 4;
+    }
+    else
+    {
+        Local_u8ErrorState = NOK;
+    }
+    return Local_u8ErrorState;
 }

@@ -46,13 +46,100 @@ typedef enum
     USART3_IRQ,
     EXTI15_10_IRQ,
     RTC_Alarm_IRQ,
-} InterruptNumber_t;
+    OTG_FS_WKUP_IRQ,
+    TIM8_BRK_TIM12_IRQ,
+    TIM8_UP_TIM13_IRQ,
+    TIM8_TRG_COM_TIM14_IRQ,
+    TIM8_CC_IRQ,
+    DMA1_Stream7_IRQ,
+    FSMC_IRQ,
+    SDIO_IRQ,
+    TIM5_IRQ,
+    SPI3_IRQ,
+    UART4_IRQ,
+    UART5_IRQ,
+    TIM6_DAC_IRQ,
+    TIM7_IRQ,
+    DMA2_Stream0_IRQ,
+    DMA2_Stream1_IRQ,
+    DMA2_Stream2_IRQ,
+    DMA2_Stream3_IRQ,
+    DMA2_Stream4_IRQ,
+    CAN2_TX_IRQ = 63,
+    CAN2_RX0_IRQ,
+    CAN2_RX1_IRQ,
+    CAN2_SCE_IRQ,
+    OTG_FS_IRQ,
+    DMA2_Stream5_IRQ,
+    DMA2_Stream6_IRQ,
+    DMA2_Stream7_IRQ,
+    USART6_IRQ,
+    I2C3_EV_IRQ,
+    I2C3_ER_IRQ,
+    OTG_HS_EP1_OUT_IRQ,
+    OTG_HS_EP1_IN_IRQ,
+    OTG_HS_WKUP_IRQ,
+    OTG_HS_IRQ,
+    DCMI_IRQ,
+    FPU_IRQ = 81,
+    SPI4_IRQ = 84,
+    SAI1_IRQ = 87,
+    SAI2_IRQ = 91,
+    QUADSPI_IRQ,
+    HDMI_CEC_IRQ,
+    SPDIF_RX_IRQ,
+    FMPI2C1_IRQ,
+    FMPI2C1_ERROR_IRQ,
+} IRQ_t;
 
-void NVIC_voidEnable(InterruptNumber_t interruptNumber);
-void NVIC_voidDisable(InterruptNumber_t interruptNumber);
-void NVIC_voidSetPendingFlag(InterruptNumber_t interruptNumber);
-void NVIC_voidClearPendingFlag(InterruptNumber_t interruptNumber);
-uint8_t NVIC_u8GetActiveFlag(InterruptNumber_t interruptNumber);
-void NVIC_voidSetPriority(InterruptNumber_t interruptNumber, uint8_t priority);
+/**
+ * @fn     NVIC_u8Enable
+ * @brief  Enable an interrupt
+ * @param[in]   interruptNumber: The interrupt number
+ * @retval Error status
+ */
+uint8_t NVIC_u8Enable(IRQ_t IRQ);
+
+/**
+ * @fn     NVIC_u8Disable
+ * @brief  Disable an interrupt
+ * @param[in]   IRQ: The interrupt number
+ * @retval Error status
+ */
+uint8_t NVIC_u8Disable(IRQ_t IRQ);
+
+/**
+ * @fn     NVIC_u8SetPendingFlag
+ * @brief  Set the pending flag for an interrupt
+ * @param[in]   IRQ: The interrupt number
+ * @retval Error status
+ */
+uint8_t NVIC_u8SetPendingFlag(IRQ_t IRQ);
+
+/**
+ * @fn     NVIC_u8ClearPendingFlag
+ * @brief  Clear the pending flag for an interrupt
+ * @param[in]   IRQ: The interrupt number
+ * @retval Error status
+ */
+uint8_t NVIC_u8ClearPendingFlag(IRQ_t IRQ);
+
+/**
+ * @fn     NVIC_u8GetActiveFlag
+ * @brief  Get the active flag for an interrupt
+ * @param[in]   IRQ: The interrupt number
+ * @param[out]  value: Pointer to store the active flag value
+ * @retval Error status
+ */
+uint8_t NVIC_u8GetActiveFlag(IRQ_t IRQ, uint8_t *value);
+
+/**
+ * @fn     NVIC_u8SetPriority
+ * @brief  Set the priority for an interrupt
+ * @param[in]   IRQ: The interrupt number
+ * @param[in]   priority: The priority value
+ * @retval Error status
+ */
+uint8_t NVIC_u8SetPriority(IRQ_t IRQ, uint8_t priority);
 
 #endif
