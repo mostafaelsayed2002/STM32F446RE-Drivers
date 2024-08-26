@@ -52,7 +52,7 @@ uint8_t SPI_u8Init(SPI_Config_t *config)
     return OK;
 }
 
-uint8_t SPI_u8TransmitReceiveAsync(SPI_t copy_SPI, uint16_t *pData, uint32_t Len, void (*callback)(uint16_t))
+uint8_t SPI_u8Transmit_IT(SPI_t copy_SPI, uint16_t *pData, uint32_t Len)
 {
     if (TXState[copy_SPI] == BUSY)
         return NOK;
@@ -60,10 +60,18 @@ uint8_t SPI_u8TransmitReceiveAsync(SPI_t copy_SPI, uint16_t *pData, uint32_t Len
     TXState[copy_SPI] = BUSY;
     SPIx_Data[copy_SPI] = pData;
     SPIx_Len[copy_SPI] = Len;
-    SPI_Callback[copy_SPI] = callback;
     SPIx[copy_SPI]->DR = *pData;
     // Enable TXE interrupt
     SET_BIT(SPIx[copy_SPI]->CR2, TXEIE);
+    return OK;
+}
+
+uint8_t SPI_u8ReceiveIT(SPI_t copy_SPI, void (*callback)(uint16_t))
+{
+    if (callback == NULL)
+        return NULL_POINTER;
+    SPI_Callback[copy_SPI] = callback;
+    SET_BIT(SPIx[copy_SPI]->CR2, RXNEIE);
     return OK;
 }
 

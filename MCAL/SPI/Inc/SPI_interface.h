@@ -64,6 +64,7 @@ typedef struct
 } SPI_Config_t;
 
 uint8_t SPI_u8Init(SPI_Config_t *copy_Config);
-uint8_t SPI_u8TransmitReceiveAsync(SPI_t copy_SPI, uint16_t *pData, uint32_t Len, void (*callback)(uint16_t));
+uint8_t SPI_u8Transmit_IT(SPI_t copy_SPI, uint16_t *pData, uint32_t Len);
+uint8_t SPI_u8ReceiveIT(SPI_t copy_SPI, void (*callback)(uint16_t));
 
 #endif
