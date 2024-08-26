@@ -7,100 +7,131 @@
 #define READY 0
 #define BUSY 1
 
-uint8_t TXState[2] = {READY, READY};
-uint8_t *pTxBuffer[2] = {NULL, NULL}; // Pointer to the data to be sent
-uint32_t TxLen[2] = {0, 0};           // Length of the data to be sent
+uint8_t TXState[3] = {READY, READY, READY};
 
-void SPI4_IRQHandler(void);
-void SPI1_IRQHandler(void);
+static SPI_RegDef_t *SPIx[3] = {SPI1, SPI2, SPI3};
+static uint16_t *SPIx_Data[3];
+static uint32_t SPIx_Len[3];
+static void (*SPI_Callback[3])(uint16_t);
 
-static SPI_RegDef_t *SPIx[2] = {SPI1, SPI4};
-
-void SPI_voidInit(SPI_Config_t *copy_Config)
+uint8_t SPI_u8Init(SPI_Config_t *config)
 {
-    switch (copy_Config->DataFrameFormat)
-    {
-    case bit_8:
-        CLEAR_BIT(SPIx[copy_Config->SPI]->CR1, DFF);
-        break;
-    case bit_16:
-        SET_BIT(SPIx[copy_Config->SPI]->CR1, DFF);
-        break;
-    }
-    switch (copy_Config->BaudRate)
-    {
-    case MSB:
-        CLEAR_BIT(SPIx[copy_Config->SPI]->CR1, BR);
-        break;
-    case LSB:
-        SET_BIT(SPIx[copy_Config->SPI]->CR1, BR);
-        break;
-    }
-    switch (copy_Config->Mode)
-    {
-    case SLAVE:
-        CLEAR_BIT(SPIx[copy_Config->SPI]->CR1, MSTR);
-        break;
-    case MASTER:
-        SET_BIT(SPIx[copy_Config->SPI]->CR1, MSTR);
-        break;
-    }
-    switch (copy_Config->TXInterrupt)
-    {
-    case TXI_ENABLED:
-        SET_BIT(SPIx[copy_Config->SPI]->CR2, TXEIE);
-        break;
-    case TXI_DISABLED:
-        CLEAR_BIT(SPIx[copy_Config->SPI]->CR2, TXEIE);
-        break;
-    }
-    switch (copy_Config->RXInterrupt)
-    {
-    case RXI_ENABLED:
-        SET_BIT(SPIx[copy_Config->SPI]->CR2, RXNEIE);
-        break;
-    case RXI_DISABLED:
-        CLEAR_BIT(SPIx[copy_Config->SPI]->CR2, RXNEIE);
-        break;
-    }
-    SET_BIT(SPIx[copy_Config->SPI]->CR1, SPE);
+    if (config == NULL)
+        return NULL_POINTER;
+    // 8 or 16 bit data frame format
+    SPIx[config->SPI]->CR1 &= ~(1 << DFF);
+    SPIx[config->SPI]->CR1 |= (config->DataFrameFormat << DFF);
+
+    // MSB or LSB first
+    SPIx[config->SPI]->CR1 &= ~(1 << LSBFIRST);
+    SPIx[config->SPI]->CR1 |= (config->LSBFirst << LSBFIRST);
+
+    // Master or Slave
+    SPIx[config->SPI]->CR1 &= ~(1 << MSTR);
+    SPIx[config->SPI]->CR1 |= (config->Mode << MSTR);
+
+    // CPOL: Zero or One start
+    SPIx[config->SPI]->CR1 &= ~(1 << CPOL);
+    SPIx[config->SPI]->CR1 |= (config->clockPolarity << CPOL);
+
+    // CPHA: First or Second edge
+    SPIx[config->SPI]->CR1 &= ~(1 << CPHA);
+    SPIx[config->SPI]->CR1 |= (config->clockPhase << CPHA);
+
+    // Baud rate
+    SPIx[config->SPI]->CR1 &= ~(0b111 << BR);
+    SPIx[config->SPI]->CR1 |= (config->BaudRate << BR);
+
+    // Software slave management
+    SET_BIT(SPIx[config->SPI]->CR1, SSM);
+    if (config->Mode == MASTER)
+        SET_BIT(SPIx[config->SPI]->CR1, SSI);
+
+    // Enable SPI
+    SET_BIT(SPIx[config->SPI]->CR1, SPE);
+    return OK;
 }
 
-void SPI_voidSendData(uint16_t *pData, uint32_t Len, SPI_t copy_SPI)
+uint8_t SPI_u8TransmitReceiveAsync(SPI_t copy_SPI, uint16_t *pData, uint32_t Len, void (*callback)(uint16_t))
 {
     if (TXState[copy_SPI] == BUSY)
-    {
-        return;
-    }
-    pTxBuffer[copy_SPI] = pData;
-    TxLen[copy_SPI] = Len;
+        return NOK;
+
     TXState[copy_SPI] = BUSY;
-    SPIx[copy_SPI]->DR = *pTxBuffer[copy_SPI];
+    SPIx_Data[copy_SPI] = pData;
+    SPIx_Len[copy_SPI] = Len;
+    SPI_Callback[copy_SPI] = callback;
+    SPIx[copy_SPI]->DR = *pData;
+    // Enable TXE interrupt
+    SET_BIT(SPIx[copy_SPI]->CR2, TXEIE);
+    return OK;
 }
 
-void SPI4_IRQHandler(void)
-{
-    if (READ_BIT(SPI4->SR, TXE))
-    {
-        SPI4->DR = *pTxBuffer[2];
-        pTxBuffer[2]++;
-        TxLen[2]--;
-        if (TxLen[2] == 0)
-        {
-            TXState[2] = READY;
-        }
-    }
-}
 void SPI1_IRQHandler(void)
 {
     if (READ_BIT(SPI1->SR, TXE))
     {
-        SPI1->DR = *pTxBuffer[2];
-        pTxBuffer[2]++;
-        TxLen[2]--;
-        if (TxLen[2] == 0)
+        SPIx_Len[0]--;
+        if (SPIx_Len[0] > 0)
+        {
+            SPIx_Data[0]++;
+            SPI1->DR = *(SPIx_Data[0]);
+        }
+        else
+        {
+            TXState[1] = READY;
+            CLEAR_BIT(SPI1->CR2, TXEIE);
+        }
+    }
+    if (READ_BIT(SPI1->SR, RXNE))
+    {
+        if (SPI_Callback[0] != NULL)
+            SPI_Callback[0](SPI1->DR);
+    }
+}
+
+void SPI2_IRQHandler(void)
+{
+    if (READ_BIT(SPI2->SR, TXE))
+    {
+        SPIx_Len[1]--;
+        if (SPIx_Len[1] > 0)
+        {
+            SPIx_Data[1]++;
+            SPI2->DR = *(SPIx_Data[1]);
+        }
+        else
+        {
+            TXState[1] = READY;
+            CLEAR_BIT(SPI2->CR2, TXEIE);
+        }
+    }
+    if (READ_BIT(SPI2->SR, RXNE))
+    {
+        if (SPI_Callback[1] != NULL)
+            SPI_Callback[1](SPI2->DR);
+    }
+}
+
+void SPI3_IRQHandler(void)
+{
+    if (READ_BIT(SPI3->SR, TXE))
+    {
+        SPIx_Len[2]--;
+        if (SPIx_Len[2] > 0)
+        {
+            SPIx_Data[2]++;
+            SPI3->DR = *(SPIx_Data[2]);
+        }
+        else
         {
             TXState[2] = READY;
+            CLEAR_BIT(SPI3->CR2, TXEIE);
         }
+    }
+    if (READ_BIT(SPI3->SR, RXNE))
+    {
+        if (SPI_Callback[2] != NULL)
+            SPI_Callback[2](SPI3->DR);
     }
 }

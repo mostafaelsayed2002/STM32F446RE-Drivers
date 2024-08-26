@@ -20,3 +20,9 @@ void RCC_voidAPB2EnablePeripheralClock(uint8_t peripheral)
 
     RCC->APB2ENR |= (1 << peripheral);
 }
+
+void RCC_voidAPB1EnablePeripheralClock(uint8_t peripheral)
+{
+
+    RCC->APB1ENR |= (1 << peripheral);
+}

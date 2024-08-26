@@ -186,7 +186,6 @@ typedef struct
     volatile uint32_t IABR[8]; // Interrupt active bit registers
     volatile uint32_t RESERVED4[56];
     volatile uint8_t IP[240]; // Interrupt priority registers
-
 } NVIC_RegDef_t;
 
 /****************************** EXTI Register Definition Structures ******************/
@@ -227,6 +226,15 @@ typedef struct
     volatile uint32_t I2SPR;   // SPI_I2S prescaler register
 } SPI_RegDef_t;
 
+/****************************** SysTick Register Definition Structures ******************/
+
+typedef struct
+{
+    volatile uint32_t CTRL;  // SysTick control and status register
+    volatile uint32_t LOAD;  // SysTick reload value register
+    volatile uint32_t VAL;   // SysTick current value register
+    volatile uint32_t CALIB; // SysTick calibration value register
+} STK_RegDef_t;
 /****************************** GPIO Definitions **************************************/
 
 #define GPIOA ((GPIO_RegDef_t *)GPIOA_BASE_ADDRESS)
@@ -262,5 +270,10 @@ typedef struct
 
 #define SPI4 ((SPI_RegDef_t *)SPI4_BASE_ADDRESS)
 #define SPI1 ((SPI_RegDef_t *)SPI1_BASE_ADDRESS)
+#define SPI2 ((SPI_RegDef_t *)SPI2_BASE_ADDRESS)
+#define SPI3 ((SPI_RegDef_t *)SPI3_BASE_ADDRESS)
+/****************************** STK Definitions **************************************/
+
+#define STK ((STK_RegDef_t *)STK_BASE_ADDRESS)
 
 #endif

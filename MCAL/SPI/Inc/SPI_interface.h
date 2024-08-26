@@ -6,13 +6,14 @@
 typedef enum
 {
     SPI1,
-    SPI4
+    SPI2,
+    SPI3,
 } SPI_t;
 
 typedef enum
 {
-    bit_8,
-    bit_16
+    BIT8,
+    BIT16
 } DFF_t;
 
 typedef enum
@@ -23,14 +24,14 @@ typedef enum
 
 typedef enum
 {
-    Fpclk_2,
-    Fpclk_4,
-    Fpclk_8,
-    Fpclk_16,
-    Fpclk_32,
-    Fpclk_64,
-    Fpclk_128,
-    Fpclk_256
+    FPCLK_2,
+    FPCLK_4,
+    FPCLK_8,
+    FPCLK_16,
+    FPCLK_32,
+    FPCLK_64,
+    FPCLK_128,
+    FPCLK_256
 } BR_t;
 
 typedef enum
@@ -41,15 +42,15 @@ typedef enum
 
 typedef enum
 {
-    TXI_ENABLED,
-    TXI_DISABLED
-} TXI_t;
+    ZERO_START,
+    ONE_START
+} CPOL_t;
 
 typedef enum
 {
-    RXI_ENABLED,
-    RXI_DISABLED
-} RXI_t;
+    FIRST_EDGE,
+    SECOND_EDGE
+} CPHA_t;
 
 typedef struct
 {
@@ -58,11 +59,11 @@ typedef struct
     LSBFIRST_t LSBFirst;
     BR_t BaudRate;
     MODE_t Mode;
-    TXI_t TXInterrupt;
-    RXI_t RXInterrupt;
+    CPOL_t clockPolarity;
+    CPHA_t clockPhase;
 } SPI_Config_t;
 
-void SPI_voidInit(SPI_Config_t *copy_Config);
-void SPI_voidSendData(uint16_t copy_Data, SPI_t copy_SPI);
+uint8_t SPI_u8Init(SPI_Config_t *copy_Config);
+uint8_t SPI_u8TransmitReceiveAsync(SPI_t copy_SPI, uint16_t *pData, uint32_t Len, void (*callback)(uint16_t));
 
 #endif
