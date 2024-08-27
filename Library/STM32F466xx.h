@@ -235,6 +235,23 @@ typedef struct
     volatile uint32_t VAL;   // SysTick current value register
     volatile uint32_t CALIB; // SysTick calibration value register
 } STK_RegDef_t;
+
+/****************************** I2C Register Definition Structures ******************/
+
+typedef struct
+{
+    volatile uint32_t CR1;   // I2C control register 1
+    volatile uint32_t CR2;   // I2C control register 2
+    volatile uint32_t OAR1;  // I2C own address register 1
+    volatile uint32_t OAR2;  // I2C own address register 2
+    volatile uint32_t DR;    // I2C data register
+    volatile uint32_t SR1;   // I2C status register 1
+    volatile uint32_t SR2;   // I2C status register 2
+    volatile uint32_t CCR;   // I2C clock control register
+    volatile uint32_t TRISE; // I2C TRISE register
+    volatile uint32_t FLTR;  // I2C FLTR register
+} I2C_RegDef_t;
+
 /****************************** GPIO Definitions **************************************/
 
 #define GPIOA ((GPIO_RegDef_t *)GPIOA_BASE_ADDRESS)
@@ -275,5 +292,10 @@ typedef struct
 /****************************** STK Definitions **************************************/
 
 #define STK ((STK_RegDef_t *)STK_BASE_ADDRESS)
+
+/****************************** I2C Definitions **************************************/
+#define I2C1 ((I2C_RegDef_t *)I2C1_BASE_ADDRESS)
+#define I2C2 ((I2C_RegDef_t *)I2C2_BASE_ADDRESS)
+#define I2C3 ((I2C_RegDef_t *)I2C3_BASE_ADDRESS)
 
 #endif
