@@ -33,6 +33,6 @@ typedef struct
 
 uint8_t I2C_Init(I2C_Config_t *I2C_Config);
 uint8_t I2C_Write(I2C_t num, uint8_t SlaveAddress, uint8_t *Data, uint8_t DataSize);
-uint8_t I2C_Read(I2C_t num, uint8_t SlaveAddress, uint8_t registerNum, uint8_t *Data, uint8_t DataSize);
+uint8_t I2C_Read(I2C_t num, uint8_t SlaveAddress, uint8_t *Data, uint8_t DataSize);
 
 #endif
