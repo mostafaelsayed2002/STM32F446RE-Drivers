@@ -252,6 +252,19 @@ typedef struct
     volatile uint32_t FLTR;  // I2C FLTR register
 } I2C_RegDef_t;
 
+/****************************** UART Register Definition Structures ******************/
+
+typedef struct
+{
+    volatile uint32_t SR;   // UART status register
+    volatile uint32_t DR;   // UART data register
+    volatile uint32_t BRR;  // UART baud rate register
+    volatile uint32_t CR1;  // UART control register 1
+    volatile uint32_t CR2;  // UART control register 2
+    volatile uint32_t CR3;  // UART control register 3
+    volatile uint32_t GTPR; // UART guard time and prescaler register
+} UART_RegDef_t;
+
 /****************************** GPIO Definitions **************************************/
 
 #define GPIOA ((GPIO_RegDef_t *)GPIOA_BASE_ADDRESS)
@@ -298,4 +311,12 @@ typedef struct
 #define I2C2 ((I2C_RegDef_t *)I2C2_BASE_ADDRESS)
 #define I2C3 ((I2C_RegDef_t *)I2C3_BASE_ADDRESS)
 
+/****************************** UART Definitions **************************************/
+
+#define USART1 ((UART_RegDef_t *)USART1_BASE_ADDRESS)
+#define USART2 ((UART_RegDef_t *)USART2_BASE_ADDRESS)
+#define USART3 ((UART_RegDef_t *)USART3_BASE_ADDRESS)
+#define UART4 ((UART_RegDef_t *)UART4_BASE_ADDRESS)
+#define UART5 ((UART_RegDef_t *)UART5_BASE_ADDRESS)
+#define USART6 ((UART_RegDef_t *)USART6_BASE_ADDRESS)
 #endif
